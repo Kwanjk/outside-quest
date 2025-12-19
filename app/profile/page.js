@@ -2,7 +2,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
-import { Bar } from 'react-chartjs-2'; // Library 2
+import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -18,7 +18,8 @@ export default function Profile() {
   }, []);
 
   const chartData = {
-    labels: quests.slice(0, 5).map(q => q.quest.substring(0, 10) + '...'),
+    // FIX IS HERE: We added (q.quest || "Quest") to prevent crashes on null values
+    labels: quests.slice(0, 5).map(q => (q.quest || "Unknown Quest").substring(0, 10) + '...'),
     datasets: [{
       label: 'XP Gained',
       data: quests.slice(0, 5).map(q => q.xp_earned),
@@ -40,7 +41,8 @@ export default function Profile() {
             <ul className="space-y-3 max-h-64 overflow-y-auto">
               {quests.map((q) => (
                 <li key={q.id} className="flex justify-between items-center bg-slate-800 p-3 rounded">
-                  <span className="text-sm">{q.quest}</span>
+                  {/* Safety check here too */}
+                  <span className="text-sm">{q.quest || "Unknown Quest"}</span>
                   <span className="text-green-400 font-mono text-sm">+{q.xp_earned} XP</span>
                 </li>
               ))}
