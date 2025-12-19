@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Outside Quest: Level Up in Real Life
 
-## Getting Started
+## Project Description
+Outside Quest is a gamified wellness application designed to help gamers and students combat screen fatigue. [cite_start]By integrating real-time weather data and motivational quotes, the app generates daily "real-world quests" that encourage users to step away from their screens and earn XP for physical activity and mindfulness[cite: 5, 11].
 
-First, run the development server:
+## Target Browsers
+* Chrome (Desktop/Mobile)
+* Firefox
+* Safari (iOS/MacOS)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Link to Developer Manual
+[Jump to Developer Manual](#developer-manual)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# Developer Manual
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 1. Installation
+1.  Clone the repository.
+2.  Run `npm install` to install dependencies (Next.js, Axios, Chart.js, Supabase).
+3.  Create a `.env.local` file in the root directory.
+4.  Add your API keys to the `.env.local` file (See "API Keys" section below).
 
-## Learn More
+## 2. Running the Application
+* Run `npm run dev` to start the local development server.
+* Open `http://localhost:3000` in your browser.
 
-To learn more about Next.js, take a look at the following resources:
+## 3. Testing
+* We use standard `console.log` debugging and manual API testing via the browser network tab.
+* To test the API routes individually, navigate to `http://localhost:3000/api/daily-quest` in your browser.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 4. API Endpoints
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### GET `/api/daily-quest`
+* **Purpose:** Fetches weather from OpenWeatherMap and quotes from ZenQuotes. [cite_start]Returns a combined JSON object with a generated quest[cite: 28, 29].
+* **Inputs:** None (uses server-side environment variables).
+* **Outputs:** JSON `{ weather, temp, quote, quest, xp }`.
 
-## Deploy on Vercel
+### GET `/api/user-quests`
+* [cite_start]**Purpose:** Retrieves the history of completed quests from the Supabase database[cite: 30].
+* **Outputs:** JSON Array of quest objects.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### POST `/api/complete-quest`
+* **Purpose:** Saves a completed quest to the Supabase database.
+* **Inputs:** JSON `{ quest: string, xp_earned: number }`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 5. Known Bugs & Future Roadmap
+* **Bug:** Weather location is currently hardcoded to Baltimore/Maryland for demonstration purposes.
+* **Roadmap:** Implement Geolocation API to auto-detect user position for weather data.
