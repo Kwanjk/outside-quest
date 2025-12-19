@@ -18,7 +18,6 @@ export default function Profile() {
   }, []);
 
   const chartData = {
-    // FIX IS HERE: We added (q.quest || "Quest") to prevent crashes on null values
     labels: quests.slice(0, 5).map(q => (q.quest || "Unknown Quest").substring(0, 10) + '...'),
     datasets: [{
       label: 'XP Gained',
